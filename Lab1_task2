@@ -1,0 +1,68 @@
+def en(plain,key):
+    temp=""
+    result=""
+    for p in plain:
+        p=p.upper()
+        temp+=p
+    plain=temp
+    temp=""
+    
+    for k in key:
+        k=k.upper()
+        temp+=k
+    key=temp
+    keyi=0 # it is used to access the key alph
+    base=ord('A')
+    
+    for alph in plain:
+        if alph.isalpha():
+            base1=ord(alph)
+            p=base1-base
+            k=ord(key[keyi%len(key)])-base   this formula helps to give index 0 1 2 and then repeat 0 1 2 
+            c=(p+k)%26+base
+            c=chr(c)
+            keyi+=1
+            result+=c
+        else:
+            result+=alph
+    return result  
+#########################################
+def de(plain,key):
+    temp=""
+    result=""
+    for p in plain:
+        p=p.upper()
+        temp+=p
+    plain=temp
+    temp=""
+    
+    for k in key:
+        k=k.upper()
+        temp+=k
+    key=temp
+    keyi=0
+    base=ord('A')
+    
+    for alph in plain:
+        if alph.isalpha():
+            base1=ord(alph)
+            c=base1-base
+            k=ord(key[keyi%len(key)])-base
+            p=(c-k)%26+base   # -k overall same with encrypt
+            p=chr(p)
+            keyi+=1
+            result+=p
+        else:
+            result+=alph
+    return result 
+
+plain=input("Enter plaintext= ")
+key=input("Enter key =")
+encrypt=en(plain,key)
+print("Encrypt vegenar cypher= ",encrypt)
+decrypt=de(encrypt,key)
+print("Decrypt vegenar cypher= ",decrypt)
+  
+    
+    
+    
