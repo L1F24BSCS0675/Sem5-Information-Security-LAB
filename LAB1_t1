@@ -1,0 +1,33 @@
+def en(plain,key):
+    temp=""
+    for p in plain: # convert all plaintext into the upper case 
+        p=p.upper()
+        temp+=p
+    plain=temp
+    
+    base=ord('A') # get the ascci value of the alphabet A
+    result=""
+    for alph in plain:
+        if alph.isalpha():
+            base1=ord(alph) # ascci value of alphabet of plain 
+            p=base1-base  # get the ascci digit value  against the  alph
+            res=(p+key)%26+base  # + base again convert the ascci digit value to the against digit  alphabet
+            res=chr(res) # typecast the digit 
+            result+=res
+        else:
+            result+=alph
+    return result
+    
+def de(encrypt,key):
+   return en(encrypt,-key)
+   
+plaintext=input("Enter the plaintext=")
+key=int(input("Enter key="))
+encrypt=en(plaintext,key)
+print("Encrypted ceaser cypher= ",encrypt)
+
+decrypt=de(encrypt,key)
+print("Decrypted ceaser cypher= ",decrypt)
+
+
+    
