@@ -1,0 +1,89 @@
+def en(plain,key):
+    temp=""
+    for p in plain:  # easy to convert plain  in upper 
+        p=p.upper()
+        temp+=p
+    plain=temp
+    
+    temp=""
+        
+    for k in key:  # convert key in upper case 
+        k=k.upper()
+        temp+=k
+        
+    s=0
+    for pp in plain:  # count the char in the plain to kept the length of keystream equal exclude thr digits in key l
+        if pp.isalpha():
+            s+=1
+        
+    key=temp
+    keystream=key # add key into the keystream
+    for pl in plain:
+        if pl.isalpha(): # dont add digit in key 
+            pl=pl.upper()
+            keystream+=pl
+    keystream=keystream[:s] #  equal the length of keystream with the len of plain without digit like plain =si12mi key =bo then keystream become bosi
+    
+    result=""
+    j=0
+    base=ord('A')
+    for i in range(len(plain)):
+        if plain[i].isalpha(): # take only the alpha for cypher and key already fitlered from digits
+            p=ord(plain[i])-base
+            k=ord(keystream[j])-base
+            j+=1
+            c=(p+k)%26+base
+            c=chr(c)
+            result+=c
+        else:
+            result+=plain[i] # if the digit or space kept it same in cypher
+    return result,keystream
+##############
+def de(plain,key):
+    temp=""
+    for p in plain:  # easy to convert plain  in upper 
+        p=p.upper()
+        temp+=p
+    plain=temp
+    
+    temp=""
+        
+    for k in key:  # convert key in upper case 
+        k=k.upper()
+        temp+=k
+    key=temp
+    s1=0
+    for pp in plain:  # count the char in the plain to kept the length of keystream equal exclude thr digits in key l
+        if pp.isalpha():
+            s1+=1
+            
+    j=0
+    result=""
+    base=ord('A')
+    keystream=key
+    for i in range(len(plain)):
+        if plain[i].isalpha():
+            c=ord(plain[i])-base
+            k=ord(keystream[j])-base
+            j+=1
+            p=(c-k)%26+base
+            p=chr(p)
+            result+=p
+            keystream+=p  # add in keystream the plaintext which is latter used as a key 
+        else:
+            result+=plain[i]
+            
+    keystream=keystream[0:s1] #here keystrream length become extra so to overcome this use the len of plain without digits 
+    return result,keystream
+    
+
+    
+plain=input("Enter plaintext ")
+key =input("Enter key ")
+encrypt,ekey=en(plain,key)
+print("Autokey cypher = ",encrypt,"    Key= ",ekey)
+decrypt,dkey=de(encrypt,key)
+print("Autokey decypher = ",decrypt,"            Key= ",dkey)
+
+
+
