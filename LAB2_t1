@@ -1,0 +1,32 @@
+def total(plain):
+    temp=""
+    
+    freq={} #store freq of every letter in a dic nxt it will use to access the freq in the count of every alpha 
+    for p in plain:
+        p=p.upper()
+        temp+=p
+    
+    plain=temp
+    
+    for char in plain:
+        if char.isalpha():
+            if char in freq:
+                freq[char]+=1 # already in the freq dic override its count
+            else:
+                freq[char]=1 # add nw char in dictionary with the new count
+            
+    total=sum(freq.values()) # sum of all counts of every letter 
+    # all alphabets are used we want to tell every alph freq 
+    
+    alphabets="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for alph in alphabets:
+        count=freq.get(alph,0) # access the given letter feq in the dic if this letter not exist than return 0 against that letter 
+        if count>0:
+            per=(count/total)*100
+        else:
+            per=0
+        print("Alphabet=",alph,"Count=",count,"Percentage=",per,"%")
+plain =input("Enter plain ")
+total(plain)
+
+        
